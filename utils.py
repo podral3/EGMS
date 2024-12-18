@@ -25,3 +25,26 @@ def parse_to_date(date):
     date_format = "%Y%m%d"
     return datetime.strptime(date_string, date_format)
 
+from math import sqrt, inf
+def euclidean_distance(x1, x2, y1, y2):
+    return sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
+def nearest_neighbour(asc_cords_and_id, dsc_cords_list_with_ids, n_count):
+    nn = [] 
+    for _ in range(n_count):
+        dist = inf
+        small_idx = -1
+        
+        for idx, dsc in dsc_cords_list_with_ids.iterrows():
+            c_dist = euclidean_distance(asc_cords_and_id[0], dsc['longitude'], asc_cords_and_id[1], dsc['latitude'])
+            
+            if c_dist < dist and idx not in nn:
+                small_idx = idx
+                dist = c_dist
+        
+        if small_idx != -1:
+            nn.append(small_idx)
+    
+    return nn
+
+

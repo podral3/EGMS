@@ -1,6 +1,7 @@
 import unittest
 from utils import *
 from datetime import datetime
+from pandas import DataFrame
 
 class utils_tests(unittest.TestCase):
 
@@ -29,6 +30,19 @@ class utils_tests(unittest.TestCase):
         d = {}
         d[asc] = ["20180102","20180105"]
         self.assertEqual(d, match_dates([asc],dsc,6))
+
+    #nn
+    
+    def test_finds_nearest(self):
+        asc_tuple = (1,1)
+        dsc_points = [
+            ['u', 2,2],
+            ['t', 10, 10],
+            ['z', 1.5, 1.5]
+        ]
+        df = DataFrame(dsc_points, columns=['pid', 'latitude', 'longitude'])
+        nn = nearest_neighbour(asc_tuple, df, 1)
+        self.assertEqual(nn[0], 2)
 
 if __name__ == '__main__':
     unittest.main()

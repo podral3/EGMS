@@ -47,4 +47,15 @@ def nearest_neighbour(asc_cords_and_id, dsc_cords_list_with_ids, n_count):
     
     return nn
 
+import math
+def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, track_angle_dsc):
+    a1 = math.cos(incident_asc * math.pi / 180)
+    a2 = math.sin(incident_asc * math.pi / 180) / math.cos((track_angle_asc - track_angle_dsc) * math.pi / 180)
+    a3 = math.cos(incident_dsc * math.pi / 180)
+    a4 = math.sin(incident_dsc * math.pi / 180)
+    w1 = (a1 * a4) - (a2 * a3)
+    w2 = (v_asc * a4)- (a2 * v_dsc)
+    w3 = (a1 * v_dsc) - (a3 * v_asc)
+    dap = w2 / w1
+    dhald = w3 / w1 #nie wiem o co chodzi
 

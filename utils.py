@@ -58,4 +58,5 @@ def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, trac
     w3 = (a1 * v_dsc) - (a3 * v_asc)
     dap = w2 / w1
     dhald = w3 / w1 #nie wiem o co chodzi
+    return (dap, dhald)
 

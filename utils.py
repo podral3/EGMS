@@ -60,3 +60,15 @@ def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, trac
     dhald = w3 / w1 #nie wiem o co chodzi
     return (dap, dhald)
 
+def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
+    points_in_radius = []
+
+    for idx, dsc in dsc_cords_list_with_ids.iterrows():
+            distance = euclidean_distance(asc_cords[0], dsc['longitude'], asc_cords[1], dsc['latitude'])
+            
+            if distance <= radius:
+                points_in_radius.append(idx)
+    
+    return points_in_radius
+
+

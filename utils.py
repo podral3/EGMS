@@ -71,4 +71,65 @@ def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     
     return points_in_radius
 
+def find_min_max_points(points):
+    min_x = float('inf')
+    max_x = float('-inf')
+    min_y = float('inf')
+    max_y = float('-inf')
+
+    right_up_corner = None
+    left_down_corner = None
+
+    for point in points.iterrows():
+        x, y = points['longitude'], points['latitude']
+
+        # min wsp x
+        if x < min_x:
+            min_x = x
+        
+        # max wsp x
+        if x > max_x:
+            max_x = x
+        
+        # min wsp y
+        if y < min_y:
+            min_y = y
+        
+        # max wsp y
+        if y > max_y:
+            max_y = y
+
+        return min_x, max_x, min_y, max_y
+
+def search_grid(min_x, max_x, min_y, max_y, cell_size):
+    left_up = (min_x, max_y)
+    left_down = (min_x, min_y)
+    right_up = (max_x, max_y)
+    right_down = (max_x, min_y)
+
+    width = euclidean_distance(left_up, right_up)
+    height = euclidean_distance(left_up, left_down)
+
+    cells_in_row = math.ceil(width / cell_size)
+    cells_in_column = math.ceil(height / cell_size)
+
+    square_list = []
+
+    first_square = (left_up, (min_x + cell_size, max_y - cell_size))
+
+    for row in range(cells_in_column):
+        jump_in_row = 0
+        jump_in_column = 0
+
+        
+        for col in range(cells_in_row):
+            yes = 0 #byle co aby nie było błędu
+
+    return left_up #to samo
+
+
+
+
+
+
 

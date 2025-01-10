@@ -29,7 +29,10 @@ from math import sqrt, inf
 def euclidean_distance(x1, x2, y1, y2):
     return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
-def nearest_neighbour(asc_cords_and_id, dsc_cords_list_with_ids, n_count):
+def nearest_neighbour(asc_cords_and_id, dsc_cords_list_with_ids, n_count) -> list[int]:
+    """
+    Zwraca indeksy n najbliższych sąsiadów punktów DSC
+    """
     nn = [] 
     for _ in range(n_count):
         dist = inf
@@ -57,6 +60,6 @@ def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, trac
     w2 = (v_asc * a4)- (a2 * v_dsc)
     w3 = (a1 * v_dsc) - (a3 * v_asc)
     dap = w2 / w1
-    dhald = w3 / w1 #nie wiem o co chodzi
+    dhald = w3 / w1
     return (dap, dhald)
 

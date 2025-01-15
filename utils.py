@@ -77,14 +77,8 @@ def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
 
 import csv
 def save_to_csv(data, delimiter_input):
-
-    #Opening a CSV file in write mode
-    with open('products.csv', 'w', newline='') as file:
-        # Step 4: Creating a CSV writer object
+    with open('products.csv', 'w', newline='') as file:    
         writer = csv.writer(file,  delimiter=delimiter_input)
-        
-        
-        #Writing the list to the CSV file
-        writer.writerow(data)  # Use writerow for single list
+        writer.writerow(data)
 
     

@@ -62,7 +62,7 @@ def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, trac
     w3 = (a1 * v_dsc) - (a3 * v_asc)
     dap = w2 / w1
     dhald = w3 / w1
-    return (dap, dhald)
+    return (float(dap), float(dhald))
 
 def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     points_in_radius = []
@@ -76,9 +76,17 @@ def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     return points_in_radius
 
 import csv
-def save_to_csv(data, delimiter_input):
-    with open('products.csv', 'w', newline='') as file:    
+import os
+def create_new_csv(filename, dates, delimiter_input):
+    with open(filename, 'w', newline='') as file:
         writer = csv.writer(file,  delimiter=delimiter_input)
-        writer.writerow(data)
+        pid_name = 'pid'
+        row = [pid_name] + dates
+        writer.writerow(row)
+def save_row_to_csv(filename, pid, data, delimiter_input):
+    with open(filename, 'a', newline='') as file:    
+        writer = csv.writer(file,  delimiter=delimiter_input)
+        row = [pid] + data
+        writer.writerow(row)
 
-    
+

@@ -23,8 +23,8 @@ def grid(asc_points: pd.DataFrame, dsc_points: pd.DataFrame, grid_size):
                 #iteracja po datach, powielenie kodu
                 for asc_date in matching_dates:
                     dsc_dates = matching_dates[asc_date]
-                    w = wzor_pierwszy(filtered_asc[asc_date].mean(), filtered_dsc[dsc_dates].mean(), filtered_asc['incidence_angle'].mean(),
-                                filtered_dsc['incidence_angle'].mean(), filtered_asc['track_angle'].mean(), filtered_dsc['track_angle'].mean())
+                    w = wzor_pierwszy(filtered_asc[asc_date].mean(), filtered_dsc[dsc_dates].mean(), filtered_asc['incidence_'].mean(),
+                                filtered_dsc['incidence_'].mean(), filtered_asc['track_angl'].mean(), filtered_dsc['track_angl'].mean())
                     #print(w[0], w[1])
                     cords_with_value.append([small_min_x, small_min_y, w[0], w[1]])
             small_min_y += grid_size

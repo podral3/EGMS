@@ -44,5 +44,20 @@ class utils_tests(unittest.TestCase):
         nn = nearest_neighbour(asc_tuple, df, 1)
         self.assertEqual(nn[0], 2)
 
+    #radius
+
+    def test_radius(self):
+        asc_cords = (5,5)
+        radius = 2
+        dsc_points = [
+            ['q', 4, 4],
+            ['w', 4, 5],
+            ['e', 1, 1]
+        ]
+        df = DataFrame(dsc_points, columns=['pid', 'latitude', 'longitude'])
+        #nn = find_by_radius(asc_cords, df, radius)
+        #self.assertEqual(len(nn), 2)
+        
+
 if __name__ == '__main__':
     unittest.main()

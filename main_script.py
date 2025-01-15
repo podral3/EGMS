@@ -25,8 +25,9 @@ def calculate_for_each_point(asc_df: pd.DataFrame, dsc_df: pd.DataFrame,
         dap = []
         dhald = []
         asc_tuple = (asc[latitude_col_name], asc[longitude_col_name])
-        nn_idx = nearest_neighbour(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 1)
-        #nn_idx = find_by_radius(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 0.0001)
+        #nn_idx = nn_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 1)
+        nn_idx = radius_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 0.001)
+        print(len(nn_idx))
         nn_points = dsc_df.iloc[nn_idx]
         for asc_date in matching_dates: #dla kazdej daty w jednym wierszu ASC
             dsc_dates = matching_dates[asc_date]#POLICZ WZOR
@@ -45,7 +46,7 @@ def calculate_for_each_point(asc_df: pd.DataFrame, dsc_df: pd.DataFrame,
             #TODO save to csv
             break
 
-#calculate_for_each_point(asc_df, dsc_df)
+calculate_for_each_point(asc_df, dsc_df, log=False)
 
 from grid import grid
-data = grid(asc_df, dsc_df , 0.5)
+#data = grid(asc_df, dsc_df , 0.5)

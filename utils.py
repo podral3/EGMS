@@ -30,8 +30,7 @@ from math import sqrt, inf
 def euclidean_distance(x1: int, x2: int, y1: int, y2: int):
     return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
-
-def nearest_neighbour(asc_single_point, dsc_cords_list_with_ids, n_count) -> list[int]:
+def nearest_neighbour(asc_cords_and_id, dsc_cords_list_with_ids, n_count) -> list[int]:
     """
     Zwraca indeksy n najbliższych sąsiadów punktów DSC
     """
@@ -41,7 +40,7 @@ def nearest_neighbour(asc_single_point, dsc_cords_list_with_ids, n_count) -> lis
         small_idx = -1
         
         for idx, dsc in dsc_cords_list_with_ids.iterrows():
-            c_dist = euclidean_distance(asc_single_point[0], dsc['longitude'], asc_single_point[1], dsc['latitude'])
+            c_dist = euclidean_distance(asc_cords_and_id[0], dsc['longitude'], asc_cords_and_id[1], dsc['latitude'])
             
             if c_dist < dist and idx not in nn:
                 small_idx = idx
@@ -51,14 +50,6 @@ def nearest_neighbour(asc_single_point, dsc_cords_list_with_ids, n_count) -> lis
             nn.append(small_idx)
     
     return nn
-
-from scipy import spatial
-def nn_kdtree(asc_single_point_id, dsc_cords_list_with_ids, n_count):
-    coordinates = dsc_cords_list_with_ids[['longitude', 'latitude']].values
-    tree = spatial.KDTree(coordinates)
-    point = [asc_single_point_id[0], asc_single_point_id[1]]
-    distances, indices = tree.query(point, k=n_count)
-    return indices
 
 import math
 def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, track_angle_dsc):
@@ -71,7 +62,7 @@ def wzor_pierwszy(v_asc,v_dsc, incident_asc, incident_dsc, track_angle_asc, trac
     w3 = (a1 * v_dsc) - (a3 * v_asc)
     dap = w2 / w1
     dhald = w3 / w1
-    return (dap, dhald)
+    return (float(dap), float(dhald))
 
 def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     points_in_radius = []
@@ -84,9 +75,22 @@ def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     
     return points_in_radius
 
-def radius_kdtree(asc_cords, dsc_cords_list_with_ids, radius):
-    coordinates = dsc_cords_list_with_ids[['longitude', 'latitude']].values
-    tree = spatial.KDTree(coordinates)
-    point = [asc_cords[0], asc_cords[1]]
-    indices = tree.query_ball_point(point, r=radius)
-    return indices
+import csv
+import os
+def create_new_csv(filename, dates, delimiter_input):
+
+    if os.path.exists(filename):
+        os.remove(filename)
+
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=delimiter_input)
+        header_row = ['pid'] + list(dates)
+        writer.writerow(header_row)
+
+def save_row_to_csv(filename, pid, data, delimiter_input):
+    with open(filename, 'a', newline='') as file:    
+        writer = csv.writer(file,  delimiter=delimiter_input)
+        row = [pid] + data
+        writer.writerow(row)
+
+

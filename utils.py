@@ -76,7 +76,6 @@ def find_by_radius(asc_cords, dsc_cords_list_with_ids, radius):
     return points_in_radius
 
 import csv
-import os
 def create_new_csv(filename, dates, delimiter_input):
     import csv
     with open(filename, 'w', newline='') as file:

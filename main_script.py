@@ -20,14 +20,15 @@ def calculate_for_each_point(asc_df: pd.DataFrame, dsc_df: pd.DataFrame,
     dsc_cols = get_date_columns(dsc_df.columns)
     matching_dates = match_dates(asc_cols, dsc_cols, 6)
 
-    #TODO create_csv
+    create_new_csv('output/dap.csv', asc_cols, ';')
+    create_new_csv('output/dhald.csv', asc_cols, ';')
+
     for idx, asc in asc_df.iterrows(): #dla kazdego wiersza w ASC
         dap = []
         dhald = []
         asc_tuple = (asc[latitude_col_name], asc[longitude_col_name])
-        #nn_idx = nn_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 1)
-        nn_idx = radius_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 0.001)
-        print(len(nn_idx))
+        nn_idx = nn_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 5)
+        #nn_idx = radius_kdtree(asc_tuple, dsc_df[['pid', 'latitude', 'longitude']], 0.001)
         nn_points = dsc_df.iloc[nn_idx]
         for asc_date in matching_dates: #dla kazdej daty w jednym wierszu ASC
             dsc_dates = matching_dates[asc_date]#POLICZ WZOR
@@ -43,10 +44,12 @@ def calculate_for_each_point(asc_df: pd.DataFrame, dsc_df: pd.DataFrame,
             #tutaj zamiast append mean to wzor podstawiamy
             dap.append(w[0])
             dhald.append(w[1])
-            #TODO save to csv
-            break
+            
+        save_row_to_csv('output/dap.csv', asc['pid'],dap,';')
+        save_row_to_csv('output/dhald.csv', asc['pid'],dhald,';')
+            
 
-calculate_for_each_point(asc_df, dsc_df, log=False)
+calculate_for_each_point(asc_df, dsc_df, log=True)
 
 from grid import grid
 #data = grid(asc_df, dsc_df , 0.5)

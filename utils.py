@@ -90,3 +90,22 @@ def radius_kdtree(asc_cords, dsc_cords_list_with_ids, radius):
     point = [asc_cords[0], asc_cords[1]]
     indices = tree.query_ball_point(point, r=radius)
     return indices
+
+import csv
+import os
+def create_new_csv(filename, dates, delimiter_input):
+
+    if os.path.exists(filename):
+        os.remove(filename)
+
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=delimiter_input)
+        header_row = ['pid'] + list(dates)
+        writer.writerow(header_row)
+
+def save_row_to_csv(filename, pid, data, delimiter_input):
+    with open(filename, 'a', newline='') as file:    
+        writer = csv.writer(file,  delimiter=delimiter_input)
+        row = [pid] + data
+        writer.writerow(row)
+

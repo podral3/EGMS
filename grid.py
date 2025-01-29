@@ -1,6 +1,10 @@
+from utils import save_row_to_csv
 import pandas as pd 
 from utils import wzor_pierwszy, get_date_columns, match_dates
 import os
+
+dap = []
+dhald = []
 
 def grid(asc_points: pd.DataFrame,
         dsc_points: pd.DataFrame, grid_size,
@@ -33,11 +37,15 @@ def grid(asc_points: pd.DataFrame,
                     dsc_dates = matching_dates[asc_date]
                     w = wzor_pierwszy(filtered_asc[asc_date].mean(), filtered_dsc[dsc_dates].mean(), filtered_asc[incidence_col_name].mean(),
                                 filtered_dsc[incidence_col_name].mean(), filtered_asc[track_angl_col_name].mean(), filtered_dsc[track_angl_col_name].mean())
-                    #print(w[0], w[1])
+                    #pandas.series.series jako wynik
                     cords_with_value.append([small_min_x, small_min_y, w[0], w[1]])
                     if log:
                         os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
                         print("Calculated for grid", small_min_x, small_min_y)   # Log the message
+                print(type(w[0]))        
+                dap.append(w[0][1])
+                dhald.append(w[1][1])
+                save_row_to_csv('OutputGrid_Lodz.csv',(str(small_min_x) + ',' + str(small_min_y)) , dap,';')            
             small_min_y += grid_size
         small_min_y = min_y
         small_min_x += grid_size
